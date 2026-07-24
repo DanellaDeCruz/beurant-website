@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { coverImage, getCategory, type Project } from "@/data/projects";
+import { categoryColors, coverImage, getCategory, type Project } from "@/data/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const category = getCategory(project.category);
+  const color = categoryColors[project.category];
 
   return (
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
@@ -24,10 +25,13 @@ export default function ProjectCard({ project }: { project: Project }) {
           />
         </div>
         <div className="p-4">
-          {category && (
-            <div className="text-xs uppercase tracking-wide text-accent">
+          {category && color && (
+            <span
+              className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-white"
+              style={{ backgroundColor: color.solid }}
+            >
               {category.title}
-            </div>
+            </span>
           )}
           <div className="mt-1 font-display text-lg leading-snug">
             {project.title}

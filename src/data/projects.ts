@@ -13,6 +13,40 @@ export type Project = {
   imageCount: number;
 };
 
+export type CategoryColor = {
+  solid: string;
+  tint: string;
+  text: string;
+};
+
+export const categoryColors: Record<string, CategoryColor> = {
+  "residential-interiors": {
+    solid: "#B6512C",
+    tint: "#F2DFD3",
+    text: "#8A3E22",
+  },
+  "retail-commercial": {
+    solid: "#57633B",
+    tint: "#E4E8D9",
+    text: "#454E2F",
+  },
+  "exhibition-stalls-events": {
+    solid: "#B8862B",
+    tint: "#F3E7C9",
+    text: "#8C6820",
+  },
+  "corporate-institutional": {
+    solid: "#2C3E5C",
+    tint: "#DEE4EC",
+    text: "#2C3E5C",
+  },
+  "branding-graphic-design": {
+    solid: "#7A3348",
+    tint: "#F0DEE4",
+    text: "#7A3348",
+  },
+};
+
 export const categories: Category[] = [
   {
     slug: "residential-interiors",
@@ -235,6 +269,10 @@ function pad(n: number): string {
 
 export function coverImage(project: Project): string {
   return `/images/${project.category}/${project.slug}/thumb/001.webp`;
+}
+
+export function fullCoverImage(project: Project): string {
+  return `/images/${project.category}/${project.slug}/full/001.webp`;
 }
 
 export function galleryImages(

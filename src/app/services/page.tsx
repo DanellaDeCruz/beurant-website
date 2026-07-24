@@ -4,6 +4,7 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import {
   categories,
+  categoryColors,
   coverImage,
   getProjectsByCategory,
 } from "@/data/projects";
@@ -28,17 +29,27 @@ export default function ServicesPage() {
         {categories.map((category, i) => {
           const catProjects = getProjectsByCategory(category.slug);
           const cover = catProjects[0];
+          const color = categoryColors[category.slug];
           return (
             <Reveal key={category.slug} delay={i * 0.05}>
               <div className="grid items-center gap-8 sm:grid-cols-2">
                 <div className={i % 2 === 1 ? "sm:order-2" : ""}>
-                  <h2 className="font-display text-2xl">{category.title}</h2>
+                  <span
+                    className="inline-block rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide text-white"
+                    style={{ backgroundColor: color?.solid }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h2 className="mt-3 font-display text-2xl">
+                    {category.title}
+                  </h2>
                   <p className="mt-3 leading-relaxed text-muted">
                     {category.description}
                   </p>
                   <Link
                     href={`/projects?category=${category.slug}`}
-                    className="mt-5 inline-block text-sm font-medium text-accent"
+                    className="mt-5 inline-block text-sm font-medium"
+                    style={{ color: color?.text }}
                   >
                     View {catProjects.length} project
                     {catProjects.length === 1 ? "" : "s"} →
@@ -46,9 +57,10 @@ export default function ServicesPage() {
                 </div>
                 {cover && (
                   <div
-                    className={`relative aspect-[4/3] overflow-hidden rounded-lg bg-accent-soft ${
+                    className={`relative aspect-[4/3] overflow-hidden rounded-lg ${
                       i % 2 === 1 ? "sm:order-1" : ""
                     }`}
+                    style={{ backgroundColor: color?.tint }}
                   >
                     <Image
                       src={coverImage(cover)}
