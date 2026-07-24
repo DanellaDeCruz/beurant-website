@@ -1,0 +1,49 @@
+import type { Metadata } from "next";
+import Reveal from "@/components/Reveal";
+import ContactForm from "@/components/ContactForm";
+
+export const metadata: Metadata = {
+  title: "Contact — Beurant",
+  description: "Get in touch with Beurant about your next project.",
+};
+
+export default function ContactPage() {
+  return (
+    <div className="mx-auto max-w-4xl px-6 py-20">
+      <Reveal>
+        <h1 className="font-display text-4xl sm:text-5xl">Get in touch</h1>
+        <p className="mt-4 max-w-xl text-lg text-muted">
+          Placeholder — replace with your preferred intro copy for this page.
+        </p>
+      </Reveal>
+
+      <div className="mt-14 grid gap-12 sm:grid-cols-5">
+        <Reveal delay={0.05} className="sm:col-span-2">
+          <div className="flex flex-col gap-6 text-sm">
+            <div>
+              <div className="font-medium text-foreground/80">Email</div>
+              <a
+                href="mailto:hello@beurant.com"
+                className="mt-1 block text-muted transition-colors hover:text-accent"
+              >
+                hello@beurant.com
+              </a>
+            </div>
+            <div>
+              <div className="font-medium text-foreground/80">Phone</div>
+              <div className="mt-1 text-muted">+94 7X XXX XXXX</div>
+            </div>
+            <div>
+              <div className="font-medium text-foreground/80">Studio</div>
+              <div className="mt-1 text-muted">Colombo, Sri Lanka</div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1} className="sm:col-span-3">
+          <ContactForm />
+        </Reveal>
+      </div>
+    </div>
+  );
+}
