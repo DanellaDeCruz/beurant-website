@@ -222,6 +222,25 @@ async function processLogo() {
   console.log("✓ brand marks processed");
 }
 
+async function processFounderPortrait() {
+  const srcPath = path.join(
+    SOURCE_ROOT,
+    "wetransfer_graduation-pictures_2026-07-23_1001",
+    "02.png"
+  );
+  if (!existsSync(srcPath)) {
+    console.warn("! Missing founder portrait source: graduation 02.png");
+    return;
+  }
+  const brandOut = path.join(PROJECT_ROOT, "public", "brand");
+  await mkdir(brandOut, { recursive: true });
+  await sharp(srcPath)
+    .resize({ width: 900, withoutEnlargement: true })
+    .webp({ quality: 85 })
+    .toFile(path.join(brandOut, "founder-portrait.webp"));
+  console.log("✓ founder portrait processed");
+}
+
 async function main() {
   if (!existsSync(SOURCE_ROOT)) {
     throw new Error(`Source folder not found: ${SOURCE_ROOT}`);
@@ -232,6 +251,7 @@ async function main() {
     results.push(await processProject(project));
   }
   await processLogo();
+  await processFounderPortrait();
 
   console.log("\nSummary:");
   for (const r of results) {

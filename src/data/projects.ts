@@ -11,41 +11,30 @@ export type Project = {
   location?: string;
   description: string;
   imageCount: number;
+  /** 1-based index of the featured image within the processed set; defaults to 1. */
+  coverIndex?: number;
 };
 
 export type CategoryColor = {
   solid: string;
-  tint: string;
-  text: string;
 };
 
+// Jewel-toned palette tuned to read clearly on the site's dark background.
 export const categoryColors: Record<string, CategoryColor> = {
-  "residential-interiors": {
-    solid: "#B6512C",
-    tint: "#F2DFD3",
-    text: "#8A3E22",
-  },
-  "retail-commercial": {
-    solid: "#57633B",
-    tint: "#E4E8D9",
-    text: "#454E2F",
-  },
-  "exhibition-stalls-events": {
-    solid: "#B8862B",
-    tint: "#F3E7C9",
-    text: "#8C6820",
-  },
-  "corporate-institutional": {
-    solid: "#2C3E5C",
-    tint: "#DEE4EC",
-    text: "#2C3E5C",
-  },
-  "branding-graphic-design": {
-    solid: "#7A3348",
-    tint: "#F0DEE4",
-    text: "#7A3348",
-  },
+  "residential-interiors": { solid: "#D17A4A" },
+  "retail-commercial": { solid: "#8B9A66" },
+  "exhibition-stalls-events": { solid: "#D9AC55" },
+  "corporate-institutional": { solid: "#7C93B0" },
+  "branding-graphic-design": { solid: "#B06A8A" },
 };
+
+export function withAlpha(hex: string, alpha: number): string {
+  const clean = hex.replace("#", "");
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 
 export const categories: Category[] = [
   {
@@ -97,6 +86,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on the villa interiors brief, scope and outcome.",
     imageCount: 7,
+    coverIndex: 6,
   },
   {
     slug: "sense-lk",
@@ -122,6 +112,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this hardware store interior and exterior fit-out.",
     imageCount: 11,
+    coverIndex: 5,
   },
   {
     slug: "small-office-rooms",
@@ -130,6 +121,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this office interiors project.",
     imageCount: 6,
+    coverIndex: 2,
   },
   {
     slug: "fish-and-chips",
@@ -146,6 +138,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on the exhibition brief and stand design.",
     imageCount: 11,
+    coverIndex: 3,
   },
   {
     slug: "sysco-labs-stall",
@@ -162,6 +155,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this exhibition stand project.",
     imageCount: 4,
+    coverIndex: 3,
   },
   {
     slug: "pod-designs",
@@ -170,6 +164,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this modular pod/kiosk design.",
     imageCount: 6,
+    coverIndex: 5,
   },
   {
     slug: "delo-truck",
@@ -268,18 +263,27 @@ function pad(n: number): string {
 }
 
 export function coverImage(project: Project): string {
-  return `/images/${project.category}/${project.slug}/thumb/001.webp`;
+  const n = pad(project.coverIndex ?? 1);
+  return `/images/${project.category}/${project.slug}/thumb/${n}.webp`;
 }
 
 export function fullCoverImage(project: Project): string {
-  return `/images/${project.category}/${project.slug}/full/001.webp`;
+  const n = pad(project.coverIndex ?? 1);
+  return `/images/${project.category}/${project.slug}/full/${n}.webp`;
 }
 
 export function galleryImages(
   project: Project
 ): { full: string; thumb: string }[] {
-  return Array.from({ length: project.imageCount }, (_, i) => {
-    const n = pad(i + 1);
+  const cover = project.coverIndex ?? 1;
+  const order = [
+    cover,
+    ...Array.from({ length: project.imageCount }, (_, i) => i + 1).filter(
+      (i) => i !== cover
+    ),
+  ];
+  return order.map((i) => {
+    const n = pad(i);
     return {
       full: `/images/${project.category}/${project.slug}/full/${n}.webp`,
       thumb: `/images/${project.category}/${project.slug}/thumb/${n}.webp`,

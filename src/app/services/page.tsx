@@ -7,6 +7,7 @@ import {
   categoryColors,
   coverImage,
   getProjectsByCategory,
+  withAlpha,
 } from "@/data/projects";
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default function ServicesPage() {
               <div className="grid items-center gap-8 sm:grid-cols-2">
                 <div className={i % 2 === 1 ? "sm:order-2" : ""}>
                   <span
-                    className="inline-block rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide text-white"
+                    className="inline-block rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide text-background"
                     style={{ backgroundColor: color?.solid }}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -49,7 +50,7 @@ export default function ServicesPage() {
                   <Link
                     href={`/projects?category=${category.slug}`}
                     className="mt-5 inline-block text-sm font-medium"
-                    style={{ color: color?.text }}
+                    style={{ color: color?.solid }}
                   >
                     View {catProjects.length} project
                     {catProjects.length === 1 ? "" : "s"} →
@@ -60,7 +61,11 @@ export default function ServicesPage() {
                     className={`relative aspect-[4/3] overflow-hidden rounded-lg ${
                       i % 2 === 1 ? "sm:order-1" : ""
                     }`}
-                    style={{ backgroundColor: color?.tint }}
+                    style={{
+                      backgroundColor: color
+                        ? withAlpha(color.solid, 0.12)
+                        : undefined,
+                    }}
                   >
                     <Image
                       src={coverImage(cover)}

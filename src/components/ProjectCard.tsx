@@ -13,7 +13,7 @@ export default function ProjectCard({ project }: { project: Project }) {
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
       <Link
         href={`/projects/${project.category}/${project.slug}`}
-        className="group block overflow-hidden rounded-lg border border-border/70 bg-white"
+        className="group block overflow-hidden rounded-lg border border-border/70 bg-surface"
       >
         <div className="relative aspect-[4/3] overflow-hidden bg-accent-soft">
           <Image
@@ -27,13 +27,13 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="p-4">
           {category && color && (
             <span
-              className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-white"
+              className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-background"
               style={{ backgroundColor: color.solid }}
             >
               {category.title}
             </span>
           )}
-          <div className="mt-1 font-display text-lg leading-snug">
+          <div className="mt-1 font-display text-lg leading-snug text-foreground">
             {project.title}
           </div>
         </div>
