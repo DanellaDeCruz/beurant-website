@@ -1,32 +1,34 @@
-import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import ProjectCard from "@/components/ProjectCard";
-import HeroSlideshow from "@/components/HeroSlideshow";
+import HeroBackground from "@/components/HeroBackground";
 import {
   categories,
   categoryColors,
   featuredProjectSlugs,
+  fullImageAt,
+  getProject,
   projects,
   withAlpha,
 } from "@/data/projects";
 
-const slideshowSlugs = [
-  "aarawild-luxury-villas-kandalama",
-  "hardware-store",
-  "pod-designs",
-  "world-health-organisation",
-  "beurant-identity-cw-mackie",
-];
+// Real photography rather than the exhibition-stall renders — those carry
+// large brand wordmarks (HUTCH, DEWALT, AOD) that compete with the headline.
+const heroBackgroundImages = [
+  [getProject("residential-interiors", "aarawild-luxury-villas-kandalama"), 3],
+  [getProject("residential-interiors", "aarawild-luxury-villas-kandalama"), 5],
+  [getProject("residential-interiors", "aarawild-luxury-villas-kandalama"), 6],
+  [getProject("corporate-institutional", "tata-flagship-showroom"), 3],
+] as const;
 
 export default function Home() {
   const featured = featuredProjectSlugs
     .map((slug) => projects.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
-  const slides = slideshowSlugs
-    .map((slug) => projects.find((p) => p.slug === slug))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const heroImages = heroBackgroundImages
+    .filter(([p]) => Boolean(p))
+    .map(([p, i]) => fullImageAt(p!, i));
 
   const stats = [
     { value: `${projects.length}+`, label: "Projects delivered" },
@@ -36,90 +38,54 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-20 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="flex flex-col items-start gap-7">
-            <Reveal>
-              <span className="inline-block rounded-lg bg-white p-2">
-                <Image
-                  src="/brand/beurant-mark.png"
-                  alt="Beurant"
-                  width={40}
-                  height={40}
-                  className="h-8 w-auto"
-                  priority
-                />
-              </span>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h1 className="max-w-xl font-display text-4xl leading-tight sm:text-6xl">
-                Interiors and exhibition spaces, designed with intent.
-              </h1>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="max-w-lg text-lg leading-relaxed text-muted">
-                Beurant is a design studio working across residential
-                interiors, retail fit-outs, exhibition stalls and corporate
-                installations — placeholder copy, replace with your own
-                positioning.
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/projects"
-                  className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground hover:text-background"
+      <section className="relative flex h-[620px] items-center overflow-hidden sm:h-[680px]">
+        <HeroBackground images={heroImages} />
+
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+          <Reveal>
+            <h1 className="max-w-xl font-display text-4xl leading-tight sm:text-6xl">
+              Interiors and exhibition spaces, designed with intent.
+            </h1>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
+              Beurant is a design studio working across residential
+              interiors, retail fit-outs, exhibition stalls and corporate
+              installations — placeholder copy, replace with your own
+              positioning.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mt-7 flex flex-wrap gap-4">
+              <Link
+                href="/projects"
+                className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground hover:text-background"
+              >
+                View Portfolio
+              </Link>
+              <Link
+                href="/contact"
+                className="rounded-full border border-border px-6 py-3 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
+              >
+                Get in touch
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div className="mt-8 inline-flex flex-wrap gap-6 rounded-xl border border-border bg-background/60 px-6 py-4 backdrop-blur-md">
+              {stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className={i > 0 ? "border-l border-border pl-6" : ""}
                 >
-                  View Portfolio
-                </Link>
-                <Link
-                  href="/contact"
-                  className="rounded-full border border-border px-6 py-3 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
-                >
-                  Get in touch
-                </Link>
-              </div>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="flex flex-wrap gap-6 rounded-xl border border-border bg-surface px-6 py-4">
-                {stats.map((s, i) => (
-                  <div
-                    key={s.label}
-                    className={i > 0 ? "border-l border-border pl-6" : ""}
-                  >
-                    <div className="font-display text-2xl text-accent">
-                      {s.value}
-                    </div>
-                    <div className="text-xs text-muted">{s.label}</div>
+                  <div className="font-display text-2xl text-accent">
+                    {s.value}
                   </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="relative hidden h-[460px] lg:block">
-            <div
-              className="absolute -right-16 -top-16 h-72 w-72 rounded-full opacity-30 blur-3xl"
-              style={{
-                background: `radial-gradient(circle, ${categoryColors["residential-interiors"].solid}, transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute -bottom-10 -left-10 h-64 w-64 rounded-full opacity-25 blur-3xl"
-              style={{
-                background: `radial-gradient(circle, ${categoryColors["branding-graphic-design"].solid}, transparent 70%)`,
-              }}
-            />
-            <Reveal delay={0.15} className="relative h-full w-full">
-              <HeroSlideshow slides={slides} />
-            </Reveal>
-          </div>
-
-          <div className="-mt-4 block lg:hidden">
-            <Reveal delay={0.1} className="h-72 w-full">
-              <HeroSlideshow slides={slides} />
-            </Reveal>
-          </div>
+                  <div className="text-xs text-muted">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 

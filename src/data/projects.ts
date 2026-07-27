@@ -272,6 +272,10 @@ export function fullCoverImage(project: Project): string {
   return `/images/${project.category}/${project.slug}/full/${n}.webp`;
 }
 
+export function fullImageAt(project: Project, index: number): string {
+  return `/images/${project.category}/${project.slug}/full/${pad(index)}.webp`;
+}
+
 export function galleryImages(
   project: Project
 ): { full: string; thumb: string }[] {
