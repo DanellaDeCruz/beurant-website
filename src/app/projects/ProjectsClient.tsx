@@ -24,10 +24,8 @@ export default function ProjectsClient() {
         <button
           type="button"
           onClick={() => setActive("all")}
-          className={`rounded-full border px-4 py-2 text-sm transition-colors ${
-            active === "all"
-              ? "border-foreground bg-foreground text-background"
-              : "border-border text-muted hover:border-accent hover:text-accent"
+          className={`rounded-full px-4 py-2 text-sm transition-colors ${
+            active === "all" ? "glass-accent" : "glass glass-hover text-muted"
           }`}
         >
           All
@@ -37,10 +35,10 @@ export default function ProjectsClient() {
             key={c.slug}
             type="button"
             onClick={() => setActive(c.slug)}
-            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+            className={`rounded-full px-4 py-2 text-sm transition-colors ${
               active === c.slug
-                ? "border-foreground bg-foreground text-background"
-                : "border-border text-muted hover:border-accent hover:text-accent"
+                ? "glass-accent"
+                : "glass glass-hover text-muted"
             }`}
           >
             {c.title}
@@ -50,7 +48,7 @@ export default function ProjectsClient() {
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((project, i) => (
-          <Reveal key={project.slug} delay={(i % 6) * 0.04}>
+          <Reveal key={project.slug} delay={(i % 6) * 0.04} className="h-full">
             <ProjectCard project={project} />
           </Reveal>
         ))}

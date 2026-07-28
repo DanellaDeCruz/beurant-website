@@ -17,9 +17,9 @@ export default function ContactPage() {
         </p>
       </Reveal>
 
-      <div className="mt-14 grid gap-12 sm:grid-cols-5">
+      <div className="mt-14 grid gap-8 sm:grid-cols-5">
         <Reveal delay={0.05} className="sm:col-span-2">
-          <div className="flex flex-col gap-6 text-sm">
+          <div className="glass flex h-full flex-col gap-6 rounded-2xl p-6 text-sm">
             <div>
               <div className="font-medium text-foreground/80">Email</div>
               <a
@@ -41,7 +41,9 @@ export default function ContactPage() {
         </Reveal>
 
         <Reveal delay={0.1} className="sm:col-span-3">
-          <ContactForm />
+          <div className="glass rounded-2xl p-6">
+            <ContactForm />
+          </div>
         </Reveal>
       </div>
     </div>

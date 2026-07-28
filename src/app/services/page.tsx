@@ -2,13 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import {
-  categories,
-  categoryColors,
-  coverImage,
-  getProjectsByCategory,
-  withAlpha,
-} from "@/data/projects";
+import { categories, coverImage, getProjectsByCategory } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: "Services — Beurant",
@@ -30,15 +24,11 @@ export default function ServicesPage() {
         {categories.map((category, i) => {
           const catProjects = getProjectsByCategory(category.slug);
           const cover = catProjects[0];
-          const color = categoryColors[category.slug];
           return (
             <Reveal key={category.slug} delay={i * 0.05}>
               <div className="grid items-center gap-8 sm:grid-cols-2">
                 <div className={i % 2 === 1 ? "sm:order-2" : ""}>
-                  <span
-                    className="inline-block rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide text-background"
-                    style={{ backgroundColor: color?.solid }}
-                  >
+                  <span className="glass-tag inline-block rounded-full px-3 py-1 font-display text-sm text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h2 className="mt-3 font-display text-2xl">
@@ -49,8 +39,7 @@ export default function ServicesPage() {
                   </p>
                   <Link
                     href={`/projects?category=${category.slug}`}
-                    className="mt-5 inline-block text-sm font-medium"
-                    style={{ color: color?.solid }}
+                    className="mt-5 inline-block text-sm font-medium text-accent"
                   >
                     View {catProjects.length} project
                     {catProjects.length === 1 ? "" : "s"} →
@@ -58,14 +47,9 @@ export default function ServicesPage() {
                 </div>
                 {cover && (
                   <div
-                    className={`relative aspect-[4/3] overflow-hidden rounded-lg ${
+                    className={`glass relative aspect-[4/3] overflow-hidden rounded-lg ${
                       i % 2 === 1 ? "sm:order-1" : ""
                     }`}
-                    style={{
-                      backgroundColor: color
-                        ? withAlpha(color.solid, 0.12)
-                        : undefined,
-                    }}
                   >
                     <Image
                       src={coverImage(cover)}

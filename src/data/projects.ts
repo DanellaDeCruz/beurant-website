@@ -15,27 +15,6 @@ export type Project = {
   coverIndex?: number;
 };
 
-export type CategoryColor = {
-  solid: string;
-};
-
-// Jewel-toned palette tuned to read clearly on the site's dark background.
-export const categoryColors: Record<string, CategoryColor> = {
-  "residential-interiors": { solid: "#D17A4A" },
-  "retail-commercial": { solid: "#8B9A66" },
-  "exhibition-stalls-events": { solid: "#D9AC55" },
-  "corporate-institutional": { solid: "#7C93B0" },
-  "branding-graphic-design": { solid: "#B06A8A" },
-};
-
-export function withAlpha(hex: string, alpha: number): string {
-  const clean = hex.replace("#", "");
-  const r = parseInt(clean.slice(0, 2), 16);
-  const g = parseInt(clean.slice(2, 4), 16);
-  const b = parseInt(clean.slice(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
 export const categories: Category[] = [
   {
     slug: "residential-interiors",

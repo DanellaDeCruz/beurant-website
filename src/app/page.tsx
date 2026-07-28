@@ -4,12 +4,10 @@ import ProjectCard from "@/components/ProjectCard";
 import HeroBackground from "@/components/HeroBackground";
 import {
   categories,
-  categoryColors,
   featuredProjectSlugs,
   fullImageAt,
   getProject,
   projects,
-  withAlpha,
 } from "@/data/projects";
 
 // Real photography rather than the exhibition-stall renders — those carry
@@ -59,29 +57,29 @@ export default function Home() {
             <div className="mt-7 flex flex-wrap gap-4">
               <Link
                 href="/projects"
-                className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground hover:text-background"
+                className="glass glass-hover rounded-full px-6 py-3 text-sm font-medium text-white"
               >
                 View Portfolio
               </Link>
               <Link
                 href="/contact"
-                className="rounded-full border border-border px-6 py-3 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
+                className="glass glass-hover rounded-full px-6 py-3 text-sm font-medium text-white"
               >
                 Get in touch
               </Link>
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="mt-8 inline-flex flex-wrap gap-6 rounded-xl border border-border bg-background/60 px-6 py-4 backdrop-blur-md">
+            <div className="glass mt-8 inline-flex flex-wrap gap-6 rounded-xl px-6 py-4">
               {stats.map((s, i) => (
                 <div
                   key={s.label}
-                  className={i > 0 ? "border-l border-border pl-6" : ""}
+                  className={i > 0 ? "border-l border-white/15 pl-6" : ""}
                 >
-                  <div className="font-display text-2xl text-accent">
+                  <div className="font-display text-2xl text-white">
                     {s.value}
                   </div>
-                  <div className="text-xs text-muted">{s.label}</div>
+                  <div className="text-xs text-white/70">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -95,46 +93,24 @@ export default function Home() {
             <h2 className="font-display text-2xl">What we do</h2>
           </Reveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {categories.map((c, i) => {
-              const color = categoryColors[c.slug];
-              return (
-                <Reveal key={c.slug} delay={i * 0.05} className="h-full">
-                  <Link
-                    href={`/projects?category=${c.slug}`}
-                    className="group flex h-full flex-col overflow-hidden rounded-lg border border-border transition-colors hover:border-accent"
-                  >
-                    <div
-                      className="h-1.5 w-full"
-                      style={{ backgroundColor: color?.solid }}
-                    />
-                    <div
-                      className="flex flex-1 flex-col p-5"
-                      style={{
-                        backgroundColor: color
-                          ? withAlpha(color.solid, 0.1)
-                          : undefined,
-                      }}
-                    >
-                      <div
-                        className="font-display text-lg leading-snug"
-                        style={{ color: color?.solid }}
-                      >
-                        {c.title}
-                      </div>
-                      <p className="mt-2 text-sm leading-relaxed text-muted">
-                        {c.description}
-                      </p>
-                      <div
-                        className="mt-auto pt-4 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100"
-                        style={{ color: color?.solid }}
-                      >
-                        Explore →
-                      </div>
-                    </div>
-                  </Link>
-                </Reveal>
-              );
-            })}
+            {categories.map((c, i) => (
+              <Reveal key={c.slug} delay={i * 0.05} className="h-full">
+                <Link
+                  href={`/projects?category=${c.slug}`}
+                  className="glass glass-hover group flex h-full flex-col rounded-lg p-5"
+                >
+                  <div className="flex min-h-[4.5rem] items-start font-display text-lg leading-snug">
+                    {c.title}
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                    {c.description}
+                  </p>
+                  <div className="mt-auto pt-4 text-sm font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100">
+                    Explore →
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -153,7 +129,7 @@ export default function Home() {
         </Reveal>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 0.05}>
+            <Reveal key={project.slug} delay={i * 0.05} className="h-full">
               <ProjectCard project={project} />
             </Reveal>
           ))}
@@ -169,7 +145,7 @@ export default function Home() {
             </p>
             <Link
               href="/contact"
-              className="mt-8 inline-block rounded-full bg-accent px-8 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground"
+              className="glass-accent mt-8 inline-block rounded-full px-8 py-3 text-sm font-medium"
             >
               Start a conversation
             </Link>

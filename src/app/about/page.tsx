@@ -23,7 +23,7 @@ export default function AboutPage() {
 
       <div className="mt-10 grid gap-10 sm:grid-cols-5 sm:gap-14">
         <Reveal delay={0.05} className="sm:col-span-2">
-          <div className="overflow-hidden rounded-2xl bg-surface">
+          <div className="glass overflow-hidden rounded-2xl">
             <Image
               src="/brand/founder-portrait.webp"
               alt="Founder of Beurant"

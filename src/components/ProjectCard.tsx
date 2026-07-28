@@ -3,17 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { categoryColors, coverImage, getCategory, type Project } from "@/data/projects";
+import { coverImage, getCategory, type Project } from "@/data/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const category = getCategory(project.category);
-  const color = categoryColors[project.category];
 
   return (
-    <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25 }}
+      className="h-full"
+    >
       <Link
         href={`/projects/${project.category}/${project.slug}`}
-        className="group block overflow-hidden rounded-lg border border-border/70 bg-surface"
+        className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-lg"
       >
         <div className="relative aspect-[4/3] overflow-hidden bg-accent-soft">
           <Image
@@ -24,16 +27,13 @@ export default function ProjectCard({ project }: { project: Project }) {
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </div>
-        <div className="p-4">
-          {category && color && (
-            <span
-              className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-background"
-              style={{ backgroundColor: color.solid }}
-            >
+        <div className="flex flex-1 flex-col p-4">
+          {category && (
+            <span className="glass-tag inline-block w-fit rounded-full px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-muted">
               {category.title}
             </span>
           )}
-          <div className="mt-1 font-display text-lg leading-snug text-foreground">
+          <div className="mt-2 font-display text-lg leading-snug text-foreground">
             {project.title}
           </div>
         </div>
