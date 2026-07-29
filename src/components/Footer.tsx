@@ -38,10 +38,10 @@ export default function Footer() {
           <ul className="mt-3 flex flex-col gap-2 text-sm text-muted">
             <li>
               <a
-                href="mailto:hello@beurant.com"
+                href="mailto:bevan@beurant.com"
                 className="transition-colors hover:text-accent"
               >
-                hello@beurant.com
+                bevan@beurant.com
               </a>
             </li>
             <li>Colombo, Sri Lanka</li>

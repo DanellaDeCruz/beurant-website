@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative flex h-[620px] items-center overflow-hidden sm:h-[680px]">
+      <section className="relative flex min-h-dvh items-center overflow-hidden py-16">
         <HeroBackground images={heroImages} />
 
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
@@ -46,7 +46,7 @@ export default function Home() {
             </h1>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-foreground/80">
               Beurant is a design studio working across residential
               interiors, retail fit-outs, exhibition stalls and corporate
               installations — placeholder copy, replace with your own
@@ -57,13 +57,13 @@ export default function Home() {
             <div className="mt-7 flex flex-wrap gap-4">
               <Link
                 href="/projects"
-                className="glass glass-hover rounded-full px-6 py-3 text-sm font-medium text-white"
+                className="glass glass-hover rounded-full px-6 py-3 text-sm font-medium text-foreground"
               >
                 View Portfolio
               </Link>
               <Link
                 href="/contact"
-                className="glass glass-hover rounded-full px-6 py-3 text-sm font-medium text-white"
+                className="glass glass-hover rounded-full px-6 py-3 text-sm font-medium text-foreground"
               >
                 Get in touch
               </Link>
@@ -74,12 +74,12 @@ export default function Home() {
               {stats.map((s, i) => (
                 <div
                   key={s.label}
-                  className={i > 0 ? "border-l border-white/15 pl-6" : ""}
+                  className={i > 0 ? "border-l border-border pl-6" : ""}
                 >
-                  <div className="font-display text-2xl text-white">
+                  <div className="font-display text-2xl text-foreground">
                     {s.value}
                   </div>
-                  <div className="text-xs text-white/70">{s.label}</div>
+                  <div className="text-xs text-muted">{s.label}</div>
                 </div>
               ))}
             </div>

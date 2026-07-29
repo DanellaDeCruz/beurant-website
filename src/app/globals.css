@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #14120f;
+  --background: #221e18;
   --foreground: #f3f1ea;
-  --surface: #1e1b17;
-  --surface-2: #262219;
-  --accent: #7c93b0;
-  --accent-soft: #232c37;
-  --muted: #a39c90;
-  --border: #332e27;
+  --surface: #2e2a23;
+  --surface-2: #38322a;
+  --accent: #c6a567;
+  --accent-soft: #332b1c;
+  --muted: #b5ac9c;
+  --border: #423d33;
 }
 
 @theme inline {
@@ -31,12 +31,13 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #14120f;
+  color: var(--background);
 }
 
 /* Shared frosted-glass surface used for cards, badges, form fields and the
-   hero UI — a flat dark card reads as invisible against this near-black
-   background, so every "card" on the site uses this instead. */
+   hero UI — a flat dark card reads as invisible against this dark
+   background, so every "card" on the site uses a light-tinted translucent
+   panel instead. */
 .glass {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(14px);

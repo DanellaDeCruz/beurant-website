@@ -29,9 +29,11 @@ export default function ProjectCard({ project }: { project: Project }) {
         </div>
         <div className="flex flex-1 flex-col p-4">
           {category && (
-            <span className="glass-tag inline-block w-fit rounded-full px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-muted">
-              {category.title}
-            </span>
+            <div className="flex min-h-[2rem] items-start">
+              <span className="glass-tag inline-block w-fit rounded-md px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-muted">
+                {category.title}
+              </span>
+            </div>
           )}
           <div className="mt-2 font-display text-lg leading-snug text-foreground">
             {project.title}

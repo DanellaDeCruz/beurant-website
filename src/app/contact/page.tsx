@@ -23,15 +23,15 @@ export default function ContactPage() {
             <div>
               <div className="font-medium text-foreground/80">Email</div>
               <a
-                href="mailto:hello@beurant.com"
+                href="mailto:bevan@beurant.com"
                 className="mt-1 block text-muted transition-colors hover:text-accent"
               >
-                hello@beurant.com
+                bevan@beurant.com
               </a>
             </div>
             <div>
               <div className="font-medium text-foreground/80">Phone</div>
-              <div className="mt-1 text-muted">+94 7X XXX XXXX</div>
+              <div className="mt-1 text-muted">+94 77 299 0570</div>
             </div>
             <div>
               <div className="font-medium text-foreground/80">Studio</div>

@@ -55,7 +55,8 @@ export const projects: Project[] = [
     title: "Dehiwala Residence",
     description:
       "Placeholder — replace with the brief, scope and outcome for this residential renovation.",
-    imageCount: 50,
+    imageCount: 18,
+    coverIndex: 4,
   },
   {
     slug: "aarawild-luxury-villas-kandalama",
@@ -82,7 +83,8 @@ export const projects: Project[] = [
     location: "Bambalapitiya",
     description:
       "Placeholder — replace with details on this homeware retail fit-out.",
-    imageCount: 16,
+    imageCount: 11,
+    coverIndex: 2,
   },
   {
     slug: "hardware-store",
@@ -90,7 +92,7 @@ export const projects: Project[] = [
     title: "Hardware Store Fit-Out",
     description:
       "Placeholder — replace with details on this hardware store interior and exterior fit-out.",
-    imageCount: 11,
+    imageCount: 10,
     coverIndex: 5,
   },
   {
@@ -100,7 +102,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this office interiors project.",
     imageCount: 6,
-    coverIndex: 2,
+    coverIndex: 3,
   },
   {
     slug: "fish-and-chips",
@@ -108,7 +110,8 @@ export const projects: Project[] = [
     title: "Fish & Chips Outlet",
     description:
       "Placeholder — replace with details on this food outlet fit-out.",
-    imageCount: 16,
+    imageCount: 9,
+    coverIndex: 1,
   },
   {
     slug: "jat-holdings-stall",
@@ -116,8 +119,8 @@ export const projects: Project[] = [
     title: "JAT Holdings Exhibition Stall",
     description:
       "Placeholder — replace with details on the exhibition brief and stand design.",
-    imageCount: 11,
-    coverIndex: 3,
+    imageCount: 6,
+    coverIndex: 2,
   },
   {
     slug: "sysco-labs-stall",
@@ -130,16 +133,16 @@ export const projects: Project[] = [
   {
     slug: "exhibition-stall-design",
     category: "exhibition-stalls-events",
-    title: "Exhibition Stall Design",
+    title: "Exhibition Stall Design - AOD",
     description:
       "Placeholder — replace with details on this exhibition stand project.",
     imageCount: 4,
-    coverIndex: 3,
+    coverIndex: 4,
   },
   {
     slug: "pod-designs",
     category: "exhibition-stalls-events",
-    title: "Pod Designs",
+    title: "Pod Design - HUTCH",
     description:
       "Placeholder — replace with details on this modular pod/kiosk design.",
     imageCount: 6,
@@ -152,6 +155,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this vehicle branding project.",
     imageCount: 7,
+    coverIndex: 4,
   },
   {
     slug: "virtusa-event-setup",
@@ -167,7 +171,8 @@ export const projects: Project[] = [
     title: "World Health Organisation (WHO)",
     description:
       "Placeholder — replace with details on this institutional installation.",
-    imageCount: 17,
+    imageCount: 8,
+    coverIndex: 1,
   },
   {
     slug: "united-nations",
@@ -175,7 +180,8 @@ export const projects: Project[] = [
     title: "United Nations",
     description:
       "Placeholder — replace with details on this institutional installation.",
-    imageCount: 11,
+    imageCount: 7,
+    coverIndex: 1,
   },
   {
     slug: "orient-insurance",
@@ -183,7 +189,9 @@ export const projects: Project[] = [
     title: "Orient Insurance",
     description:
       "Placeholder — replace with details on this corporate fit-out.",
-    imageCount: 20,
+    imageCount: 12,
+    coverIndex: 6,
+    
   },
   {
     slug: "dimo-academy",
@@ -192,6 +200,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this corporate training facility fit-out.",
     imageCount: 5,
+    coverIndex: 2,
   },
   {
     slug: "tata-flagship-showroom",
@@ -200,6 +209,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this flagship showroom fit-out.",
     imageCount: 7,
+    coverIndex: 7,
   },
   {
     slug: "tata-showroom-network",
@@ -209,6 +219,7 @@ export const projects: Project[] = [
     description:
       "Placeholder — replace with details on this multi-branch showroom rollout.",
     imageCount: 4,
+    coverIndex: 3,
   },
   {
     slug: "beurant-identity-cw-mackie",
@@ -274,9 +285,20 @@ export function galleryImages(
   });
 }
 
+// Which project represents each category's showcase photo on the Services
+// page. Edit the slug here to change it — no need to reorder the projects
+// list above.
+export const categoryShowcaseSlug: Record<string, string> = {
+  "residential-interiors": "dehiwala-residence",
+  "retail-commercial": "fish-and-chips",
+  "exhibition-stalls-events": "jat-holdings-stall",
+  "corporate-institutional": "united-nations",
+  "branding-graphic-design": "beurant-identity-cw-mackie",
+};
+
 export const featuredProjectSlugs = [
-  "dehiwala-residence",
-  "world-health-organisation",
-  "jat-holdings-stall",
-  "sense-lk",
+  "aarawild-luxury-villas-kandalama",
+  "tata-flagship-showroom",
+  "exhibition-stall-design",
+  "mns-homeware-bambalapitiya",
 ];

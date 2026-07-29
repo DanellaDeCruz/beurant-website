@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { categories, coverImage, getProjectsByCategory } from "@/data/projects";
+import {
+  categories,
+  categoryShowcaseSlug,
+  coverImage,
+  getProjectsByCategory,
+} from "@/data/projects";
 
 export const metadata: Metadata = {
   title: "Services — Beurant",
@@ -23,7 +28,10 @@ export default function ServicesPage() {
       <div className="mt-14 flex flex-col gap-16">
         {categories.map((category, i) => {
           const catProjects = getProjectsByCategory(category.slug);
-          const cover = catProjects[0];
+          const cover =
+            catProjects.find(
+              (p) => p.slug === categoryShowcaseSlug[category.slug]
+            ) ?? catProjects[0];
           return (
             <Reveal key={category.slug} delay={i * 0.05}>
               <div className="grid items-center gap-8 sm:grid-cols-2">

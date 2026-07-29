@@ -14,10 +14,10 @@ const SOURCE_ROOT = path.resolve(PROJECT_ROOT, "..", "Bevan aiya");
 const OUTPUT_ROOT = path.join(PROJECT_ROOT, "public", "images");
 
 const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png"]);
-const FULL_WIDTH = 1920;
-const THUMB_WIDTH = 600;
-const FULL_QUALITY = 78;
-const THUMB_QUALITY = 75;
+const FULL_WIDTH = 2400;
+const THUMB_WIDTH = 800;
+const FULL_QUALITY = 87;
+const THUMB_QUALITY = 84;
 
 /**
  * Each entry describes one project's photo source and where it lands.
@@ -181,13 +181,15 @@ async function processProject(project) {
     await image
       .clone()
       .resize({ width: FULL_WIDTH, withoutEnlargement: true })
-      .webp({ quality: FULL_QUALITY })
+      .sharpen()
+      .webp({ quality: FULL_QUALITY, effort: 5 })
       .toFile(path.join(fullDir, outName));
 
     await image
       .clone()
       .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
-      .webp({ quality: THUMB_QUALITY })
+      .sharpen()
+      .webp({ quality: THUMB_QUALITY, effort: 5 })
       .toFile(path.join(thumbDir, outName));
   }
 
