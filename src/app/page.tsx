@@ -8,6 +8,7 @@ import {
   fullImageAt,
   getProject,
   projects,
+  siteStats,
 } from "@/data/projects";
 
 // Real photography rather than the exhibition-stall renders — those carry
@@ -28,11 +29,7 @@ export default function Home() {
     .filter(([p]) => Boolean(p))
     .map(([p, i]) => fullImageAt(p!, i));
 
-  const stats = [
-    { value: `${projects.length}+`, label: "Projects delivered" },
-    { value: `${categories.length}`, label: "Areas of practice" },
-    { value: "Sri Lanka", label: "Based & working across" },
-  ];
+  const stats = siteStats;
 
   return (
     <>
@@ -42,15 +39,18 @@ export default function Home() {
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
           <Reveal>
             <h1 className="max-w-xl font-display text-4xl leading-tight sm:text-6xl">
-              Interiors and exhibition spaces, designed with intent.
+              Interior spaces, designed with intent.
             </h1>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-foreground/80">
-              Beurant is a design studio working across residential
-              interiors, retail fit-outs, exhibition stalls and corporate
-              installations — placeholder copy, replace with your own
-              positioning.
+              Every project we undertake, we believe in the challenge given
+              to us. We believe in meeting the expectations of everyone
+              through design. The way we achieve the challenge is by
+              creating an appealing and unique space, based on one&apos;s
+              requirements, budget &amp; time-frame. We just happen to
+              handle every project all the way till completion — greetings,
+              and beyond!
             </p>
           </Reveal>
           <Reveal delay={0.1}>
@@ -92,7 +92,7 @@ export default function Home() {
           <Reveal>
             <h2 className="font-display text-2xl">What we do</h2>
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((c, i) => (
               <Reveal key={c.slug} delay={i * 0.05} className="h-full">
                 <Link
@@ -127,7 +127,7 @@ export default function Home() {
             </Link>
           </div>
         </Reveal>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {featured.map((project, i) => (
             <Reveal key={project.slug} delay={i * 0.05} className="h-full">
               <ProjectCard project={project} />

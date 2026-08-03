@@ -9,7 +9,6 @@ export type Project = {
   category: string;
   title: string;
   location?: string;
-  description: string;
   imageCount: number;
   /** 1-based index of the featured image within the processed set; defaults to 1. */
   coverIndex?: number;
@@ -40,12 +39,6 @@ export const categories: Category[] = [
     description:
       "Large-scale fit-outs and installations for corporates and international institutions.",
   },
-  {
-    slug: "branding-graphic-design",
-    title: "Branding & Graphic Design",
-    description:
-      "Visual identity work — logos, marks and brand systems — alongside the interiors practice.",
-  },
 ];
 
 export const projects: Project[] = [
@@ -53,8 +46,6 @@ export const projects: Project[] = [
     slug: "dehiwala-residence",
     category: "residential-interiors",
     title: "Dehiwala Residence",
-    description:
-      "Placeholder — replace with the brief, scope and outcome for this residential renovation.",
     imageCount: 18,
     coverIndex: 4,
   },
@@ -63,8 +54,6 @@ export const projects: Project[] = [
     category: "residential-interiors",
     title: "Aarawild Luxury Villas, Kandalama",
     location: "Kandalama",
-    description:
-      "Placeholder — replace with details on the villa interiors brief, scope and outcome.",
     imageCount: 7,
     coverIndex: 6,
   },
@@ -72,8 +61,6 @@ export const projects: Project[] = [
     slug: "sense-lk",
     category: "retail-commercial",
     title: "Sense.lk",
-    description:
-      "Placeholder — replace with details on this retail store fit-out.",
     imageCount: 5,
   },
   {
@@ -81,8 +68,6 @@ export const projects: Project[] = [
     category: "retail-commercial",
     title: "MNS Homeware, Bambalapitiya",
     location: "Bambalapitiya",
-    description:
-      "Placeholder — replace with details on this homeware retail fit-out.",
     imageCount: 11,
     coverIndex: 2,
   },
@@ -90,8 +75,6 @@ export const projects: Project[] = [
     slug: "hardware-store",
     category: "retail-commercial",
     title: "Hardware Store Fit-Out",
-    description:
-      "Placeholder — replace with details on this hardware store interior and exterior fit-out.",
     imageCount: 10,
     coverIndex: 5,
   },
@@ -99,8 +82,6 @@ export const projects: Project[] = [
     slug: "small-office-rooms",
     category: "retail-commercial",
     title: "Small Office Rooms",
-    description:
-      "Placeholder — replace with details on this office interiors project.",
     imageCount: 6,
     coverIndex: 3,
   },
@@ -108,8 +89,6 @@ export const projects: Project[] = [
     slug: "fish-and-chips",
     category: "retail-commercial",
     title: "Fish & Chips Outlet",
-    description:
-      "Placeholder — replace with details on this food outlet fit-out.",
     imageCount: 9,
     coverIndex: 1,
   },
@@ -117,8 +96,6 @@ export const projects: Project[] = [
     slug: "jat-holdings-stall",
     category: "exhibition-stalls-events",
     title: "JAT Holdings Exhibition Stall",
-    description:
-      "Placeholder — replace with details on the exhibition brief and stand design.",
     imageCount: 6,
     coverIndex: 2,
   },
@@ -126,16 +103,12 @@ export const projects: Project[] = [
     slug: "sysco-labs-stall",
     category: "exhibition-stalls-events",
     title: "Sysco Labs Exhibition Stall",
-    description:
-      "Placeholder — replace with details on the exhibition brief and stand design.",
     imageCount: 4,
   },
   {
     slug: "exhibition-stall-design",
     category: "exhibition-stalls-events",
     title: "Exhibition Stall Design - AOD",
-    description:
-      "Placeholder — replace with details on this exhibition stand project.",
     imageCount: 4,
     coverIndex: 4,
   },
@@ -143,8 +116,6 @@ export const projects: Project[] = [
     slug: "pod-designs",
     category: "exhibition-stalls-events",
     title: "Pod Design - HUTCH",
-    description:
-      "Placeholder — replace with details on this modular pod/kiosk design.",
     imageCount: 6,
     coverIndex: 5,
   },
@@ -152,8 +123,6 @@ export const projects: Project[] = [
     slug: "delo-truck",
     category: "exhibition-stalls-events",
     title: "Delo Truck Branding",
-    description:
-      "Placeholder — replace with details on this vehicle branding project.",
     imageCount: 7,
     coverIndex: 4,
   },
@@ -161,16 +130,12 @@ export const projects: Project[] = [
     slug: "virtusa-event-setup",
     category: "exhibition-stalls-events",
     title: "Virtusa Event Setup",
-    description:
-      "Placeholder — replace with details on this corporate event setup.",
     imageCount: 3,
   },
   {
     slug: "world-health-organisation",
     category: "corporate-institutional",
     title: "World Health Organisation (WHO)",
-    description:
-      "Placeholder — replace with details on this institutional installation.",
     imageCount: 8,
     coverIndex: 1,
   },
@@ -178,8 +143,6 @@ export const projects: Project[] = [
     slug: "united-nations",
     category: "corporate-institutional",
     title: "United Nations",
-    description:
-      "Placeholder — replace with details on this institutional installation.",
     imageCount: 7,
     coverIndex: 1,
   },
@@ -187,18 +150,13 @@ export const projects: Project[] = [
     slug: "orient-insurance",
     category: "corporate-institutional",
     title: "Orient Insurance",
-    description:
-      "Placeholder — replace with details on this corporate fit-out.",
     imageCount: 12,
     coverIndex: 6,
-    
   },
   {
     slug: "dimo-academy",
     category: "corporate-institutional",
     title: "DIMO Academy",
-    description:
-      "Placeholder — replace with details on this corporate training facility fit-out.",
     imageCount: 5,
     coverIndex: 2,
   },
@@ -206,8 +164,6 @@ export const projects: Project[] = [
     slug: "tata-flagship-showroom",
     category: "corporate-institutional",
     title: "TATA Flagship Showroom",
-    description:
-      "Placeholder — replace with details on this flagship showroom fit-out.",
     imageCount: 7,
     coverIndex: 7,
   },
@@ -216,18 +172,94 @@ export const projects: Project[] = [
     category: "corporate-institutional",
     title: "TATA Showroom Network",
     location: "Batticaloa, Galle, Katugastota & Kurunegala",
-    description:
-      "Placeholder — replace with details on this multi-branch showroom rollout.",
     imageCount: 4,
     coverIndex: 3,
   },
   {
     slug: "beurant-identity-cw-mackie",
-    category: "branding-graphic-design",
+    category: "corporate-institutional",
     title: "Beurant Identity — C.W. Mackie",
-    description:
-      "Placeholder — replace with details on this brand identity and logo design project.",
     imageCount: 9,
+  },
+  {
+    slug: "aquinas-conceptual-pod",
+    category: "exhibition-stalls-events",
+    title: "Aquinas Conceptual Pod",
+    imageCount: 6,
+  },
+  {
+    slug: "car-park-commercial-design",
+    category: "retail-commercial",
+    title: "Car Park Commercial Design",
+    imageCount: 36,
+  },
+  {
+    slug: "courtyard-design-residential",
+    category: "residential-interiors",
+    title: "Courtyard Residence",
+    imageCount: 14,
+  },
+  {
+    slug: "elephant-house-sip-sip",
+    category: "retail-commercial",
+    title: "Elephant House — “Sip Sip” Mobile Kiosk",
+    imageCount: 11,
+  },
+  {
+    slug: "residential-concept-01",
+    category: "residential-interiors",
+    title: "Residential Concept 01",
+    imageCount: 7,
+  },
+  {
+    slug: "residential-concept-02",
+    category: "residential-interiors",
+    title: "Residential Concept 02",
+    imageCount: 5,
+  },
+  {
+    slug: "residential-concept-03",
+    category: "residential-interiors",
+    title: "Residential Concept 03",
+    imageCount: 43,
+  },
+  {
+    slug: "melsiripura-residence",
+    category: "residential-interiors",
+    title: "Melsiripura Residence",
+    location: "Melsiripura",
+    imageCount: 5,
+  },
+  {
+    slug: "maharaja-group-conceptual",
+    category: "exhibition-stalls-events",
+    title: "Maharaja Group Conceptual Display",
+    imageCount: 9,
+  },
+  {
+    slug: "ranpath-packaging",
+    category: "retail-commercial",
+    title: "Ranpath Packaging Design",
+    imageCount: 15,
+  },
+  {
+    slug: "shakthi-gym-kandana",
+    category: "retail-commercial",
+    title: "Shakthi Gym, Kandana",
+    location: "Kandana",
+    imageCount: 5,
+  },
+  {
+    slug: "sozo-life-mobile-bar",
+    category: "retail-commercial",
+    title: "Sozo Life Mobile Bar",
+    imageCount: 5,
+  },
+  {
+    slug: "truly-ceylon-packaging",
+    category: "retail-commercial",
+    title: "Truly Ceylon Packaging",
+    imageCount: 13,
   },
 ];
 
@@ -285,6 +317,14 @@ export function galleryImages(
   });
 }
 
+// Headline stats shown on the Home hero and the About page — edit the
+// values here to update both at once.
+export const siteStats = [
+  { value: "150+", label: "Projects delivered" },
+  { value: "75+", label: "Different clients" },
+  { value: "8+", label: "Years of experience" },
+];
+
 // Which project represents each category's showcase photo on the Services
 // page. Edit the slug here to change it — no need to reorder the projects
 // list above.
@@ -293,7 +333,6 @@ export const categoryShowcaseSlug: Record<string, string> = {
   "retail-commercial": "fish-and-chips",
   "exhibition-stalls-events": "jat-holdings-stall",
   "corporate-institutional": "united-nations",
-  "branding-graphic-design": "beurant-identity-cw-mackie",
 };
 
 export const featuredProjectSlugs = [
@@ -301,4 +340,5 @@ export const featuredProjectSlugs = [
   "tata-flagship-showroom",
   "exhibition-stall-design",
   "mns-homeware-bambalapitiya",
+  "beurant-identity-cw-mackie",
 ];

@@ -20,8 +20,8 @@ export default function ServicesPage() {
       <Reveal>
         <h1 className="font-display text-4xl sm:text-5xl">Services</h1>
         <p className="mt-4 max-w-xl text-lg text-muted">
-          Placeholder — replace with a short intro on how you scope and run
-          projects across these areas.
+          From first sketch to final handover — how we approach residential,
+          retail, exhibition and corporate spaces.
         </p>
       </Reveal>
 

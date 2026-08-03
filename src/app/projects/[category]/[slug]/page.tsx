@@ -24,7 +24,6 @@ export async function generateMetadata({
   if (!project) return {};
   return {
     title: `${project.title} — Beurant`,
-    description: project.description,
   };
 }
 
@@ -57,9 +56,6 @@ export default async function ProjectDetailPage({
         {project.location && (
           <p className="mt-2 text-sm text-muted">{project.location}</p>
         )}
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-          {project.description}
-        </p>
       </Reveal>
 
       <div className="mt-12">

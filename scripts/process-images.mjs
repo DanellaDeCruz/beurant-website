@@ -128,10 +128,95 @@ const PROJECTS = [
     extraFiles: ["TATA_Batticaloa.jpg"],
   },
   {
-    category: "branding-graphic-design",
+    category: "corporate-institutional",
     slug: "beurant-identity-cw-mackie",
     dir: "wetransfer_my-logo-c-w-mackie-project_2026-07-23_0525",
     match: (name) => name.toLowerCase().startsWith("cwm"),
+  },
+  {
+    category: "exhibition-stalls-events",
+    slug: "aquinas-conceptual-pod",
+    dir: "wetransfer_aquinas-conceptual_2026-07-30_1539",
+  },
+  {
+    category: "retail-commercial",
+    slug: "car-park-commercial-design",
+    dirs: [
+      "wetransfer_car-park-commercial-design_2026-07-30_1625/CH&FC/Day Time",
+      "wetransfer_car-park-commercial-design_2026-07-30_1625/CH&FC/Night Time",
+    ],
+  },
+  {
+    category: "residential-interiors",
+    slug: "courtyard-design-residential",
+    dirs: [
+      "wetransfer_courtyard-design-residential_2026-07-30_1621/Initial/Day Time",
+      "wetransfer_courtyard-design-residential_2026-07-30_1621/Initial/Night Time",
+    ],
+  },
+  {
+    category: "retail-commercial",
+    slug: "elephant-house-sip-sip",
+    dirs: [
+      "wetransfer_elephant-house-conceptual_2026-07-30_1526",
+      "wetransfer_elephant-house-more-conceptual_2026-07-30_1546",
+    ],
+  },
+  {
+    category: "residential-interiors",
+    slug: "residential-concept-01",
+    dir: "wetransfer_home-design-01_2026-07-30_1603",
+  },
+  {
+    category: "residential-interiors",
+    slug: "residential-concept-02",
+    dir: "wetransfer_home-design-02_2026-07-30_1603",
+  },
+  {
+    category: "residential-interiors",
+    slug: "residential-concept-03",
+    dir: "wetransfer_home-design-03_2026-07-30_1607",
+  },
+  {
+    category: "residential-interiors",
+    slug: "melsiripura-residence",
+    dir: "wetransfer_home-design-04_2026-07-30_1620",
+  },
+  {
+    category: "exhibition-stalls-events",
+    slug: "maharaja-group-conceptual",
+    dir: "wetransfer_maharaja-group-conceptual_2026-07-30_1530",
+  },
+  {
+    category: "retail-commercial",
+    slug: "ranpath-packaging",
+    dir: "wetransfer_ranpath_2026-07-30_1550",
+  },
+  {
+    category: "retail-commercial",
+    slug: "shakthi-gym-kandana",
+    dir: "wetransfer_shakthi-gym-kandana-commercial_2026-07-30_1622",
+    match: (name) => name.toLowerCase() !== "test.jpg",
+  },
+  {
+    category: "retail-commercial",
+    slug: "sozo-life-mobile-bar",
+    dir: "wetransfer_sozo-conceptual_2026-07-30_1524",
+  },
+  {
+    category: "retail-commercial",
+    slug: "truly-ceylon-packaging",
+    dirs: [
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/Ceylon Classic",
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/Earl Grey",
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/English Breakfast",
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/Jasmine Green Tea",
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/Lemon Green Tea",
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/Pure Green Tea",
+    ],
+    extraFiles: [
+      "wetransfer_truly-ceylon_2026-07-30_1551/Truly Ceylon/Wooden_Box_03.png",
+    ],
   },
 ];
 
@@ -141,16 +226,19 @@ function pad(n) {
 
 async function listSourceFiles(project) {
   const files = [];
-  if (project.dir) {
-    const dirPath = path.join(SOURCE_ROOT, project.dir);
+  const dirs = project.dirs ?? (project.dir ? [project.dir] : []);
+  for (const dir of dirs) {
+    const dirPath = path.join(SOURCE_ROOT, dir);
     const entries = await readdir(dirPath);
+    const matched = [];
     for (const name of entries) {
       const ext = path.extname(name).toLowerCase();
       if (!IMAGE_EXT.has(ext)) continue;
       if (project.match && !project.match(name)) continue;
-      files.push(path.join(dirPath, name));
+      matched.push(path.join(dirPath, name));
     }
-    files.sort();
+    matched.sort();
+    files.push(...matched);
   }
   if (project.extraFiles) {
     for (const name of project.extraFiles) {
@@ -224,6 +312,40 @@ async function processLogo() {
   console.log("✓ brand marks processed");
 }
 
+async function processWhiteLogoAndClientPhotos() {
+  // These land directly in public/brand (not the Bevan aiya source folder),
+  // so this resizes/converts them in place and removes the oversized
+  // originals — anything in public/ ships to every visitor as-is.
+  const brandOut = path.join(PROJECT_ROOT, "public", "brand");
+  const { unlink } = await import("node:fs/promises");
+
+  const logoSrc = path.join(brandOut, "Beurant_RGB-White.png");
+  if (existsSync(logoSrc)) {
+    await sharp(logoSrc)
+      .resize({ width: 1200, withoutEnlargement: true })
+      .png({ quality: 90 })
+      .toFile(path.join(brandOut, "beurant-mark-white.png"));
+    await unlink(logoSrc);
+    console.log("✓ white logo mark processed");
+  }
+
+  const clientPhotos = [
+    ["award.png", "client-award.webp"],
+    ["C_W_Handover.jpeg", "client-cw-mackie-handover.webp"],
+    ["TATA_Flagship_04.jpg", "client-tata-flagship-team.webp"],
+  ];
+  for (const [src, dest] of clientPhotos) {
+    const srcPath = path.join(brandOut, src);
+    if (!existsSync(srcPath)) continue;
+    await sharp(srcPath)
+      .resize({ width: 1200, withoutEnlargement: true })
+      .webp({ quality: 87 })
+      .toFile(path.join(brandOut, dest));
+    await unlink(srcPath);
+  }
+  console.log("✓ client/award photos processed");
+}
+
 async function processFounderPortrait() {
   const srcPath = path.join(
     SOURCE_ROOT,
@@ -253,6 +375,7 @@ async function main() {
     results.push(await processProject(project));
   }
   await processLogo();
+  await processWhiteLogoAndClientPhotos();
   await processFounderPortrait();
 
   console.log("\nSummary:");

@@ -13,7 +13,8 @@ export default function ContactPage() {
       <Reveal>
         <h1 className="font-display text-4xl sm:text-5xl">Get in touch</h1>
         <p className="mt-4 max-w-xl text-lg text-muted">
-          Placeholder — replace with your preferred intro copy for this page.
+          Got a project in mind? Tell us a bit about it and we&apos;ll get
+          back to you shortly.
         </p>
       </Reveal>
 
@@ -35,7 +36,7 @@ export default function ContactPage() {
             </div>
             <div>
               <div className="font-medium text-foreground/80">Studio</div>
-              <div className="mt-1 text-muted">Colombo, Sri Lanka</div>
+              <div className="mt-1 text-muted">Wattala, Sri Lanka</div>
             </div>
           </div>
         </Reveal>

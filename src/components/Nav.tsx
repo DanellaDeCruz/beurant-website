@@ -26,16 +26,14 @@ export default function Nav() {
           className="flex items-center gap-2"
           onClick={() => setOpen(false)}
         >
-          <span className="rounded-md bg-white p-1">
-            <Image
-              src="/brand/beurant-mark.png"
-              alt="Beurant"
-              width={32}
-              height={32}
-              className="h-6 w-auto"
-              priority
-            />
-          </span>
+          <Image
+            src="/brand/beurant-mark-white.png"
+            alt="Beurant"
+            width={32}
+            height={32}
+            className="h-8 w-auto"
+            priority
+          />
           <span className="font-display text-lg tracking-wide">Beurant</span>
         </Link>
 

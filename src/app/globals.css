@@ -20,8 +20,12 @@
   --color-accent-soft: var(--accent-soft);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-playfair);
+  /* Helvetica referenced as a system font (not embedded) — renders as real
+     Helvetica Neue on devices that already have it licensed (macOS/iOS),
+     and falls back to Arial elsewhere, which is metrically near-identical.
+     One font family used for both headings and body, sitewide. */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {

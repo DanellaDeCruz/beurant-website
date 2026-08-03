@@ -44,6 +44,14 @@ export default function Footer() {
                 bevan@beurant.com
               </a>
             </li>
+            <li>
+              <a
+                href="tel:+94 77 299 0570"
+                className="transition-colors hover:text-accent"
+              >
+                +94 77 299 0570
+              </a>
+            </li>
             <li>Colombo, Sri Lanka</li>
             <li>
               <Link
@@ -54,6 +62,47 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
+
+          <div className="mt-4 flex gap-4">
+            <a
+              href="https://instagram.com/Beurant"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Beurant on Instagram"
+              className="text-muted transition-colors hover:text-accent"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a
+              href="https://facebook.com/Beurant"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Beurant on Facebook"
+              className="text-muted transition-colors hover:text-accent"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+              >
+                <path d="M14 8.5h2.5V5H14c-2.2 0-4 1.8-4 4v2H8v3.5h2V21h3.5v-6.5H16l.5-3.5h-3V9c0-.3.2-.5.5-.5Z" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
 
