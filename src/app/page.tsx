@@ -13,11 +13,30 @@ import {
 
 // Real photography rather than the exhibition-stall renders — those carry
 // large brand wordmarks (HUTCH, DEWALT, AOD) that compete with the headline.
+// `mobileBias: "right"` shifts the crop on narrow/tall (mobile) viewports,
+// where the visible window is much narrower than the source photo — plain
+// center framing can land on empty wall/floor instead of the actual subject.
 const heroBackgroundImages = [
-  [getProject("residential-interiors", "aarawild-luxury-villas-kandalama"), 3],
-  [getProject("residential-interiors", "aarawild-luxury-villas-kandalama"), 5],
-  [getProject("residential-interiors", "aarawild-luxury-villas-kandalama"), 6],
-  [getProject("corporate-institutional", "tata-flagship-showroom"), 3],
+  {
+    project: getProject("residential-interiors", "aarawild-luxury-villas-kandalama"),
+    index: 3,
+    mobileBias: "right",
+  },
+  {
+    project: getProject("residential-interiors", "aarawild-luxury-villas-kandalama"),
+    index: 5,
+    mobileBias: undefined,
+  },
+  {
+    project: getProject("residential-interiors", "aarawild-luxury-villas-kandalama"),
+    index: 6,
+    mobileBias: undefined,
+  },
+  {
+    project: getProject("corporate-institutional", "tata-flagship-showroom"),
+    index: 3,
+    mobileBias: "right",
+  },
 ] as const;
 
 export default function Home() {
@@ -26,8 +45,11 @@ export default function Home() {
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   const heroImages = heroBackgroundImages
-    .filter(([p]) => Boolean(p))
-    .map(([p, i]) => fullImageAt(p!, i));
+    .filter(({ project }) => Boolean(project))
+    .map(({ project, index, mobileBias }) => ({
+      src: fullImageAt(project!, index),
+      mobileBias,
+    }));
 
   const stats = siteStats;
 

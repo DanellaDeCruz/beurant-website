@@ -6,7 +6,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const INTERVAL_MS = 5000;
 
-export default function HeroBackground({ images }: { images: string[] }) {
+type HeroImage = { src: string; mobileBias?: "right" };
+
+export default function HeroBackground({ images }: { images: HeroImage[] }) {
   const [index, setIndex] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -19,11 +21,13 @@ export default function HeroBackground({ images }: { images: string[] }) {
     };
   }, [images.length]);
 
+  const active = images[index];
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       <AnimatePresence initial={false}>
         <motion.div
-          key={images[index]}
+          key={active.src}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -31,12 +35,16 @@ export default function HeroBackground({ images }: { images: string[] }) {
           className="absolute inset-0"
         >
           <Image
-            src={images[index]}
+            src={active.src}
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className={`object-cover ${
+              active.mobileBias === "right"
+                ? "object-[68%_center] sm:object-center"
+                : "object-center"
+            }`}
           />
         </motion.div>
       </AnimatePresence>
