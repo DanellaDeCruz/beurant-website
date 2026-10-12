@@ -3,104 +3,135 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
+// Portfolio first — it's what visitors come for. Home lives on the logo and
+// Contact is the call to action on the right.
 const LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About" },
 ];
 
 export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Background and hairline only once content scrolls beneath the header —
+  // at the top it stays clear, so the home hero photo runs full-bleed and a
+  // permanent border doesn't read as a hard divider on every page.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const update = () => {
+      header.dataset.scrolled = window.scrollY > 4 ? "true" : "false";
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const isActive = (href: string) => pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <header
+      ref={headerRef}
+      data-scrolled="false"
+      className="sticky top-0 z-50 border-b border-transparent transition-[background-color,border-color] duration-300 data-[scrolled=true]:border-border/70 data-[scrolled=true]:bg-background/75 data-[scrolled=true]:backdrop-blur-md"
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
-          className="flex items-center gap-2"
+          className="-ml-1 flex items-center gap-2.5 rounded-md px-1"
           onClick={() => setOpen(false)}
         >
           <Image
             src="/brand/beurant-mark-white.png"
-            alt="Beurant"
+            alt=""
             width={32}
             height={32}
             className="h-8 w-auto"
             priority
           />
-          <span className="font-display text-lg tracking-wide">Beurant</span>
+          <span translate="no" className="text-lg font-medium tracking-tight">
+            Beurant
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {LINKS.map((link) => {
-            const active =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm transition-colors hover:text-accent ${
-                  active ? "text-accent" : "text-foreground/80"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
+          {LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className="rounded-sm text-sm text-muted transition-colors duration-200 hover:text-foreground aria-[current=page]:text-foreground"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href="/contact"
+            aria-current={isActive("/contact") ? "page" : undefined}
+            className="btn btn-secondary h-9 px-4"
+          >
+            Get in Touch
+          </Link>
         </nav>
 
         <button
           type="button"
-          aria-label="Toggle menu"
+          aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 md:hidden"
+          className="-mr-2.5 flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-md md:hidden"
         >
           <span
-            className={`block h-px w-5 bg-foreground transition-transform ${
-              open ? "translate-y-[3px] rotate-45" : ""
+            aria-hidden="true"
+            className={`block h-px w-5 bg-foreground transition-transform duration-200 ease-out ${
+              open ? "translate-y-[3.5px] rotate-45" : ""
             }`}
           />
           <span
-            className={`block h-px w-5 bg-foreground transition-transform ${
-              open ? "-translate-y-[3px] -rotate-45" : ""
+            aria-hidden="true"
+            className={`block h-px w-5 bg-foreground transition-transform duration-200 ease-out ${
+              open ? "-translate-y-[3.5px] -rotate-45" : ""
             }`}
           />
         </button>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="overflow-hidden border-t border-border/70 md:hidden"
-          >
-            <div className="flex flex-col gap-1 px-6 py-4">
-              {LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="py-2 text-sm text-foreground/80 hover:text-accent"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      <nav
+        id="mobile-menu"
+        aria-label="Main"
+        data-open={open}
+        className="invisible absolute inset-x-0 top-full -translate-y-2 border-b border-border/70 bg-background/95 opacity-0 backdrop-blur-md transition-[opacity,translate,visibility] duration-200 ease-out data-[open=true]:visible data-[open=true]:translate-y-0 data-[open=true]:opacity-100 md:hidden"
+      >
+        <ul className="flex flex-col px-6 py-3">
+          {[...LINKS, { href: "/contact", label: "Contact" }].map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                onClick={() => setOpen(false)}
+                className="flex h-12 items-center text-base text-muted transition-colors hover:text-foreground aria-[current=page]:text-foreground"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 }

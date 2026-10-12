@@ -9,6 +9,12 @@
   --accent-soft: #332b1c;
   --muted: #b5ac9c;
   --border: #423d33;
+
+  /* Strong custom curves — the built-in CSS easings feel limp. ease-out for
+     anything entering or responding to input, ease-in-out for on-screen
+     movement. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
@@ -20,12 +26,18 @@
   --color-accent-soft: var(--accent-soft);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  /* Helvetica referenced as a system font (not embedded) — renders as real
-     Helvetica Neue on devices that already have it licensed (macOS/iOS),
-     and falls back to Arial elsewhere, which is metrically near-identical.
-     One font family used for both headings and body, sitewide. */
-  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Inter Tight is self-hosted via next/font (see layout.tsx) so every device
+     renders the same face — the old Helvetica stack fell back to Arial on
+     Windows and Android. One family for headings and body, sitewide. */
+  --font-sans: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  --font-display: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -38,55 +50,227 @@ body {
   color: var(--background);
 }
 
-/* Shared frosted-glass surface used for cards, badges, form fields and the
-   hero UI — a flat dark card reads as invisible against this dark
-   background, so every "card" on the site uses a light-tinted translucent
-   panel instead. */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+/* Type: large text wants tighter tracking and leading; balance headings so
+   they never end on a lone word. Inter Tight is already tightly spaced, so
+   only a light extra squeeze on the biggest sizes. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
-.glass-hover {
+h1 {
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  letter-spacing: -0.01em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* One visible, consistent focus ring for keyboard users — never shown on
+   mouse click. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+button,
+a,
+summary {
+  touch-action: manipulation;
+}
+
+/* Component classes live in the components layer so Tailwind utilities on
+   the same element (h-10, px-4, text-muted…) can still override them. */
+@layer components {
+  /* Small uppercase label used for section kickers and project categories. */
+  .eyebrow {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Frosted glass is reserved for surfaces that sit over photography (hero,
+     sticky nav) — blur over a flat background is invisible and only costs
+     GPU time. Everything else uses flat surfaces and hairlines. */
+  .glass {
+    background: rgba(34, 30, 24, 0.45);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass {
+      background: var(--surface);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+
+  /* Buttons — 44px tall touch target, press feedback on :active. */
+  .btn {
+    display: inline-flex;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding-inline: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em; /* small text wants slightly open tracking */
+    white-space: nowrap;
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--background);
+  }
+
+  .btn-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: var(--foreground);
+  }
+
+  .btn-glass {
+    background: rgba(34, 30, 24, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: var(--foreground);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: color-mix(in srgb, var(--accent) 82%, var(--foreground));
+    }
+
+    .btn-secondary:hover,
+    .btn-glass:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  /* Text link with an arrow that nudges on hover. */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 200ms ease;
+  }
+
+  .link-arrow .arrow {
+    transition: transform 200ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .link-arrow:hover .arrow,
+    .group:hover .link-arrow .arrow {
+      transform: translateX(3px);
+    }
+  }
+}
+
+/* Scroll reveal — see components/Reveal.tsx. Content is visible by default
+   (server HTML, no-JS, reduced motion); only elements that start below the
+   fold are hidden after hydration and faded in when they scroll into view. */
+[data-reveal] {
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    opacity 700ms var(--ease-out) var(--reveal-delay, 0ms),
+    transform 700ms var(--ease-out) var(--reveal-delay, 0ms);
 }
 
-.glass-hover:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
-/* Accent-tinted glass for primary actions — same frosted language, but
-   tinted so a primary button still reads as more prominent than a plain
-   glass surface. */
-.glass-accent {
-  background: color-mix(in srgb, var(--accent) 24%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+/* Lightbox — native <dialog> gives focus trapping, Escape and inert
+   background for free; this only handles look and enter/exit. */
+.lightbox {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #0e0c0a;
   color: var(--foreground);
+  overscroll-behavior: contain;
+  opacity: 0;
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    opacity 200ms var(--ease-out),
+    overlay 200ms allow-discrete,
+    display 200ms allow-discrete;
 }
 
-.glass-accent:hover {
-  background: color-mix(in srgb, var(--accent) 36%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 75%, transparent);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+.lightbox[open] {
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
 }
 
-/* Small glass pill for category labels / index numbers. */
-.glass-tag {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+.lightbox::backdrop {
+  background: transparent;
+}
+
+body:has(.lightbox[open]) {
+  overflow: hidden;
+}
+
+.lightbox-image {
+  animation: lightbox-in 240ms var(--ease-out);
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+/* Slideshow indicator: fills over the slide's duration, paused with it. */
+@keyframes progress-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal="pending"] {
+    transform: none;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+
+  .lightbox-image {
+    animation: none;
+  }
 }

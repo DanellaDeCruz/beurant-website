@@ -4,6 +4,12 @@ export type Category = {
   description: string;
 };
 
+/**
+ * Built interiors carry no `kind`. Unbuilt design work is labelled so
+ * visitors can tell it apart from completed spaces.
+ */
+export type ProjectKind = "concept" | "branding";
+
 export type Project = {
   slug: string;
   category: string;
@@ -12,6 +18,19 @@ export type Project = {
   imageCount: number;
   /** 1-based index of the featured image within the processed set; defaults to 1. */
   coverIndex?: number;
+  kind?: ProjectKind;
+  // Optional detail fields — the project page shows each one only when it's
+  // filled in. Only add facts confirmed by the studio.
+  year?: string;
+  client?: string;
+  scope?: string;
+  /** 1–3 sentences shown under the project title. */
+  description?: string;
+};
+
+export const projectKindLabel: Record<ProjectKind, string> = {
+  concept: "Concept",
+  branding: "Branding",
 };
 
 export const categories: Category[] = [
@@ -123,6 +142,7 @@ export const projects: Project[] = [
     slug: "delo-truck",
     category: "exhibition-stalls-events",
     title: "Delo Truck Branding",
+    kind: "branding",
     imageCount: 7,
     coverIndex: 4,
   },
@@ -179,12 +199,14 @@ export const projects: Project[] = [
     slug: "beurant-identity-cw-mackie",
     category: "corporate-institutional",
     title: "Beurant Identity — C.W. Mackie",
+    kind: "branding",
     imageCount: 9,
   },
   {
     slug: "aquinas-conceptual-pod",
     category: "exhibition-stalls-events",
     title: "Aquinas Conceptual Pod",
+    kind: "concept",
     imageCount: 6,
   },
   {
@@ -209,18 +231,21 @@ export const projects: Project[] = [
     slug: "residential-concept-01",
     category: "residential-interiors",
     title: "Residential Concept 01",
+    kind: "concept",
     imageCount: 7,
   },
   {
     slug: "residential-concept-02",
     category: "residential-interiors",
     title: "Residential Concept 02",
+    kind: "concept",
     imageCount: 5,
   },
   {
     slug: "residential-concept-03",
     category: "residential-interiors",
     title: "Residential Concept 03",
+    kind: "concept",
     imageCount: 43,
   },
   {
@@ -234,12 +259,14 @@ export const projects: Project[] = [
     slug: "maharaja-group-conceptual",
     category: "exhibition-stalls-events",
     title: "Maharaja Group Conceptual Display",
+    kind: "concept",
     imageCount: 9,
   },
   {
     slug: "ranpath-packaging",
     category: "retail-commercial",
     title: "Ranpath Packaging Design",
+    kind: "branding",
     imageCount: 15,
   },
   {
@@ -259,6 +286,7 @@ export const projects: Project[] = [
     slug: "truly-ceylon-packaging",
     category: "retail-commercial",
     title: "Truly Ceylon Packaging",
+    kind: "branding",
     imageCount: 13,
   },
 ];
@@ -342,3 +370,15 @@ export const featuredProjectSlugs = [
   "mns-homeware-bambalapitiya",
   "beurant-identity-cw-mackie",
 ];
+
+/** Previous/next project in list order (wrapping), for project-page navigation. */
+export function adjacentProjects(project: Project): {
+  prev: Project;
+  next: Project;
+} {
+  const i = projects.indexOf(project);
+  return {
+    prev: projects[(i - 1 + projects.length) % projects.length],
+    next: projects[(i + 1) % projects.length],
+  };
+}

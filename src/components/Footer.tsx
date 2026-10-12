@@ -1,29 +1,29 @@
 import Link from "next/link";
 import { categories } from "@/data/projects";
+import { site } from "@/lib/site";
+
+const linkClass = "text-muted transition-colors duration-200 hover:text-foreground";
 
 export default function Footer() {
   return (
     <footer className="border-t border-border/70">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="font-display text-lg tracking-wide">Beurant</div>
+          <div translate="no" className="text-lg font-medium tracking-tight">
+            Beurant
+          </div>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
             Interior &amp; exhibition design studio — residential, retail,
-            corporate and exhibition spaces.
+            corporate and exhibition spaces across Sri Lanka.
           </p>
         </div>
 
         <div>
-          <div className="text-sm font-medium text-foreground/80">
-            Services
-          </div>
-          <ul className="mt-3 flex flex-col gap-2">
+          <h2 className="eyebrow">Work</h2>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
             {categories.map((c) => (
               <li key={c.slug}>
-                <Link
-                  href={`/projects?category=${c.slug}`}
-                  className="text-sm text-muted transition-colors hover:text-accent"
-                >
+                <Link href={`/projects?category=${c.slug}`} className={linkClass}>
                   {c.title}
                 </Link>
               </li>
@@ -32,82 +32,44 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="text-sm font-medium text-foreground/80">
-            Get in touch
-          </div>
-          <ul className="mt-3 flex flex-col gap-2 text-sm text-muted">
+          <h2 className="eyebrow">Contact</h2>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
             <li>
-              <a
-                href="mailto:bevan@beurant.com"
-                className="transition-colors hover:text-accent"
-              >
-                bevan@beurant.com
+              <a href={`mailto:${site.email}`} className={linkClass}>
+                {site.email}
               </a>
             </li>
             <li>
-              <a
-                href="tel:+94 77 299 0570"
-                className="transition-colors hover:text-accent"
-              >
-                +94 77 299 0570
+              <a href={site.phoneHref} className={`${linkClass} tabular-nums`}>
+                {site.phone}
               </a>
             </li>
-            <li>Colombo, Sri Lanka</li>
-            <li>
-              <Link
-                href="/contact"
-                className="transition-colors hover:text-accent"
-              >
-                Contact form →
-              </Link>
-            </li>
+            <li className="text-muted">{site.location}</li>
+            {site.socials.map((s) => (
+              <li key={s.href}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkClass}
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))}
           </ul>
-
-          <div className="mt-4 flex gap-4">
-            <a
-              href="https://instagram.com/Beurant"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Beurant on Instagram"
-              className="text-muted transition-colors hover:text-accent"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
-            <a
-              href="https://facebook.com/Beurant"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Beurant on Facebook"
-              className="text-muted transition-colors hover:text-accent"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-              >
-                <path d="M14 8.5h2.5V5H14c-2.2 0-4 1.8-4 4v2H8v3.5h2V21h3.5v-6.5H16l.5-3.5h-3V9c0-.3.2-.5.5-.5Z" />
-              </svg>
-            </a>
-          </div>
         </div>
       </div>
 
-      <div className="border-t border-border/70 px-6 py-6 text-center text-xs text-muted">
-        © {new Date().getFullYear()} Beurant. All rights reserved.
+      <div className="border-t border-border/70">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-xs text-muted sm:flex-row sm:justify-between">
+          <span>
+            © {new Date().getFullYear()} Beurant. All rights reserved.
+          </span>
+          <Link href="/contact" className={linkClass}>
+            Start a Project →
+          </Link>
+        </div>
       </div>
     </footer>
   );
