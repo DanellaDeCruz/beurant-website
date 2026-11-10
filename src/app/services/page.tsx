@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 // DRAFT — written from what the site already states (requirements, budget
 // and time-frame; drawings and 3D visuals; furniture and fittings produced;
 // every project handled through to completion). Confirm with the studio.
+// Confirmed: the studio oversees construction rather than building it.
 const PROCESS = [
   {
     title: "Brief",
@@ -32,8 +33,8 @@ const PROCESS = [
     body: "Detailed drawings for joinery, furniture, lighting and finishes, refined with you until every detail is agreed.",
   },
   {
-    title: "Build",
-    body: "Construction and fit-out on site, alongside the furniture, fittings and products we produce.",
+    title: "Construction oversight",
+    body: "We oversee construction and fit-out on site, alongside the furniture, fittings and products we produce.",
   },
   {
     title: "Handover",

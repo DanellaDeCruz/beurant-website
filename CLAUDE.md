@@ -29,6 +29,7 @@ Portfolio site for **Beurant**, an interior & exhibition design studio in Wattal
 
 - `src/lib/site.ts` — **single source of truth** for founder, email, phone, location, socials, Web3Forms key. Never hard-code contact details elsewhere.
 - `src/data/projects.ts` — categories, projects, stats, featured list, image path helpers. Project fields `year`, `client`, `scope`, `description` are optional and only render when filled. `kind: "concept" | "branding"` labels unbuilt work.
+- `src/lib/nav.ts` — `PAGES` list (Home, Projects, Services, About, Contact) shared by `Nav` and `Footer`, plus `isActivePath`. Add new pages here.
 - `src/lib/image-size.ts` — reads image dimensions at build time (sharp) so galleries keep each photo's real aspect ratio.
 - `src/components/` — `Nav`, `Footer`, `Reveal`, `ProjectCard`, `HeroBackground`, `ClientAwardsSlideshow`, `ContactForm`, `SriLankaMap`.
 - Pages: `/`, `/projects` (filter via `?category=`), `/projects/[category]/[slug]`, `/services`, `/about`, `/contact`.

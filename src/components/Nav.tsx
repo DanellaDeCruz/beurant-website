@@ -4,14 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { PAGES, isActivePath } from "@/lib/nav";
 
-// Portfolio first — it's what visitors come for. Home lives on the logo and
-// Contact is the call to action on the right.
-const LINKS = [
-  { href: "/projects", label: "Projects" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About" },
-];
+// Contact is the call to action on the right, so it's left out of the text
+// links on desktop.
+const LINKS = PAGES.filter((page) => page.href !== "/contact");
 
 export default function Nav() {
   const pathname = usePathname();
@@ -41,7 +38,7 @@ export default function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const isActive = (href: string) => pathname.startsWith(href);
+  const isActive = (href: string) => isActivePath(pathname, href);
 
   return (
     <header
@@ -118,7 +115,7 @@ export default function Nav() {
         className="invisible absolute inset-x-0 top-full -translate-y-2 border-b border-border/70 bg-background/95 opacity-0 backdrop-blur-md transition-[opacity,translate,visibility] duration-200 ease-out data-[open=true]:visible data-[open=true]:translate-y-0 data-[open=true]:opacity-100 md:hidden"
       >
         <ul className="flex flex-col px-6 py-3">
-          {[...LINKS, { href: "/contact", label: "Contact" }].map((link) => (
+          {PAGES.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}

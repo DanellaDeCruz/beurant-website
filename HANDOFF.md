@@ -5,14 +5,14 @@ Read this at the start of every session. Update it at the end of every session (
 ## Current state
 
 - Design refresh is built and verified (type-check, lint and static build pass; pages checked at 1440px and 390px).
-- All work through the 2026-10-12 design refresh is committed and pushed to `origin/master` (2026-10-13).
+- All work is committed. Pushed to `origin/master` up to the 16.4.6 upgrade (`b4108f5`); the nav/footer/services commit after it may still be local.
 - Contact form is in `mailto:` fallback mode until a Web3Forms key is added.
 
 ## Waiting on the user
 
 1. **Web3Forms key** — create one at web3forms.com for `bevan@beurant.com`, then set `NEXT_PUBLIC_WEB3FORMS_KEY` in `.env.local` (local) and in the hosting provider's build environment. User said they'll set it up later.
 2. **Concept/branding labels** — applied only where the title says so: Residential Concept 01–03, Aquinas Conceptual Pod, Maharaja Group Conceptual Display (concept); Ranpath Packaging, Truly Ceylon Packaging, Delo Truck Branding, Beurant Identity — C.W. Mackie (branding). **Unconfirmed, left unlabelled:** Exhibition Stall Design – AOD, Pod Design – HUTCH, Car Park Commercial Design.
-3. **Services "How we work" steps** (`src/app/services/page.tsx`, `PROCESS`) are a DRAFT built from existing site claims — confirm the studio actually works this way (e.g. does it run the build itself?).
+3. **Services "How we work" steps** (`src/app/services/page.tsx`, `PROCESS`) are a DRAFT built from existing site claims. Step 4 confirmed as **construction oversight** (the studio oversees, does not build). Confirm the other steps. Note: About page still says projects "were built" / "have been built, manufactured or produced" (`src/app/about/page.tsx:76`, `:115`); ask whether that wording should change too.
 4. **Project details** — `year`, `client`, `scope`, `description` per project in `src/data/projects.ts`. Layout is ready; fields render only when filled. Do not invent these.
 5. **Social links** — confirm `instagram.com/Beurant` and `facebook.com/Beurant`; ask whether to add WhatsApp/LinkedIn.
 6. **Founder title** — currently "Founder & Interior Designer" (based on the original About copy). Confirm.
@@ -27,6 +27,8 @@ Read this at the start of every session. Update it at the end of every session (
 
 ### 2026-11-10
 
+- **Nav/footer:** Home added to header nav (desktop + mobile; active only on `/`). Footer gained a "Pages" column. Both read one list, `PAGES` in `src/lib/nav.ts`.
+- **Services:** step 4 "Build" renamed "Construction oversight" per the user.
 - **Security upgrade:** Next.js and `eslint-config-next` 16.4.0 → 16.4.6 (pinned exact) to fix a critical advisory against `next`. Added `experimental.agentUpgrade: "security"` to `next.config.ts`. tsc, lint, static build (41 pages) and dev-server smoke test pass.
 - **Gotcha:** if the shell has `NODE_ENV=development` set, `npm run build` fails prerendering with `Cannot read properties of null (reading 'useContext')` in `Nav.tsx`. Unset `NODE_ENV` before building — not a code bug.
 

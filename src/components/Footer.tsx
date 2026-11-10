@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { categories } from "@/data/projects";
+import { PAGES } from "@/lib/nav";
 import { site } from "@/lib/site";
 
 const linkClass = "text-muted transition-colors duration-200 hover:text-foreground";
@@ -7,7 +8,7 @@ const linkClass = "text-muted transition-colors duration-200 hover:text-foregrou
 export default function Footer() {
   return (
     <footer className="border-t border-border/70">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr_1fr]">
         <div>
           <div translate="no" className="text-lg font-medium tracking-tight">
             Beurant
@@ -17,6 +18,19 @@ export default function Footer() {
             corporate and exhibition spaces across Sri Lanka.
           </p>
         </div>
+
+        <nav aria-label="Footer">
+          <h2 className="eyebrow">Pages</h2>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+            {PAGES.map((page) => (
+              <li key={page.href}>
+                <Link href={page.href} className={linkClass}>
+                  {page.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <div>
           <h2 className="eyebrow">Work</h2>
