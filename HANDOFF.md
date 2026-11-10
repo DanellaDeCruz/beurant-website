@@ -21,9 +21,14 @@ Read this at the start of every session. Update it at the end of every session (
 
 - When the key arrives: test a real Web3Forms submission (success + error states).
 - Optional polish: responsive `srcset` for hero images (mobile currently downloads the 2400px `full` image, ~250–340 KB each); review featured-grid alignment when project titles wrap.
-- Remaining `npm audit`: 5 high, all one chain inside `eslint-config-next` (braces, dev-only). Only "fix" is a downgrade — ignore until Next ships an update.
+- Remaining `npm audit` (after 16.4.6): 9 moderate + 1 high, all dev-only inside the ESLint toolchain (`eslint`, `typescript-eslint` under `eslint-config-next`, `zod` via `eslint-plugin-react-hooks`). Not shipped to the static site. Revisit when `eslint-config-next` updates.
 
 ## Log
+
+### 2026-11-10
+
+- **Security upgrade:** Next.js and `eslint-config-next` 16.4.0 → 16.4.6 (pinned exact) to fix a critical advisory against `next`. Added `experimental.agentUpgrade: "security"` to `next.config.ts`. tsc, lint, static build (41 pages) and dev-server smoke test pass.
+- **Gotcha:** if the shell has `NODE_ENV=development` set, `npm run build` fails prerendering with `Cannot read properties of null (reading 'useContext')` in `Nav.tsx`. Unset `NODE_ENV` before building — not a code bug.
 
 ### 2026-10-12
 
