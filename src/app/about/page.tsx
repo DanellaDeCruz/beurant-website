@@ -73,7 +73,8 @@ export default function AboutPage() {
           <p className="mt-10 leading-relaxed text-muted">
             By graduation, {site.founder.split(" ")[0]} had completed a
             three-month internship and taken on 23 real projects for private
-            clients — six of which were built — and set up the studio straight
+            clients — six of which went on to construction — and set up the
+            studio straight
             out of college.
           </p>
         </Reveal>
@@ -111,9 +112,9 @@ export default function AboutPage() {
               connecting clients with one another.
             </p>
             <p>
-              More than 30 projects, along with furniture, fittings and
-              products, have been built, manufactured or produced. The studio
-              hopes to keep growing — including beyond Sri Lanka.
+              The studio has overseen construction on more than 30 projects,
+              and has produced furniture, fittings and products along the
+              way. It hopes to keep growing — including beyond Sri Lanka.
             </p>
           </div>
 
